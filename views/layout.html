@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{{block "title" .}}Default app title{{end}}</title>
+  <script>
+    const evtSource = new EventSource("/api/realtime");
+
+    evtSource.onerror = function (event) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
+    };
+
+    window.addEventListener("beforeunload", function (event) {
+      evtSource.close();
+    });
+  </script>
+</head>
+
+<body>
+  Header...
+
+  {{block "body" .}}
+  Default app body...
+  {{end}}
+
+  Footer...
+</body>
+
+</html>
